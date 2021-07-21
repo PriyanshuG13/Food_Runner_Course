@@ -13,7 +13,7 @@ import com.priyanshu.foodrunner.model.OrderHistory
 import org.json.JSONArray
 
 class OrderHistoryAdapter(private var ordHis: ArrayList<OrderHistory>, val context: Context) :
-    RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder>()  {
+    RecyclerView.Adapter<OrderHistoryAdapter.OrderHistoryViewHolder>() {
 
     private lateinit var orderHistoryItemsAdapter: OrderHistoryItemsAdapter
 
@@ -50,11 +50,12 @@ class OrderHistoryAdapter(private var ordHis: ArrayList<OrderHistory>, val conte
     class OrderHistoryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val resName = view.findViewById(R.id.txtOrderHistoryResName) as TextView
         val orderDate = view.findViewById(R.id.txtOrderDate) as TextView
-        val recyclerOrderHistoryItems = view.findViewById(R.id.recyclerOrderHistoryItems) as RecyclerView
+        val recyclerOrderHistoryItems =
+            view.findViewById(R.id.recyclerOrderHistoryItems) as RecyclerView
     }
 
     class OrderHistoryItemsAdapter(private var ordHisItem: JSONArray, val context: Context) :
-    RecyclerView.Adapter<OrderHistoryItemsAdapter.OrderHistoryItemsViewHolder>() {
+        RecyclerView.Adapter<OrderHistoryItemsAdapter.OrderHistoryItemsViewHolder>() {
         override fun onCreateViewHolder(
             p0: ViewGroup,
             p1: Int

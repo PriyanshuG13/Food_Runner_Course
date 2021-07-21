@@ -3,7 +3,6 @@ package com.priyanshu.foodrunner.adapter
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,13 +11,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.priyanshu.foodrunner.R
 import com.priyanshu.foodrunner.activity.CartActivity
+import com.priyanshu.foodrunner.model.Cart
 import com.priyanshu.foodrunner.model.Menu
 import org.json.JSONObject
 
-class RestaurantsMenuAdapter(private var menu: ArrayList<Menu>,
-                             val context: Context,
-                             val user_id: String, val resName: String,
-                             val btnProceedToCart: Button) :
+class RestaurantsMenuAdapter(
+    private var menu: ArrayList<Menu>,
+    val context: Context,
+    val user_id: String, val resName: String,
+    val btnProceedToCart: Button
+) :
     RecyclerView.Adapter<RestaurantsMenuAdapter.RestaurantsMenuViewHolder>() {
 
     val cart = arrayListOf<JSONObject>()
@@ -44,45 +46,41 @@ class RestaurantsMenuAdapter(private var menu: ArrayList<Menu>,
 
         val jsonParam = JSONObject()
         jsonParam.put("food_item_id", menuObject.id)
+        jsonParam.put("food_item_name", menuObject.name)
+        jsonParam.put("food_item_cost", menuObject.itemPrice)
 
-        if(cart.isNotEmpty() && cart.contains(jsonParam)){
+        if (cart.isNotEmpty() && cart.contains(jsonParam)) {
             p0.btnAdd.text = remove
             p0.btnAdd.setBackgroundColor(Color.parseColor("#ffca28"))
-        } else{
+        } else {
             p0.btnAdd.text = add
             p0.btnAdd.setBackgroundColor(Color.parseColor("#ff5039"))
         }
 
         p0.btnAdd.setOnClickListener {
-            if(!cart.contains(jsonParam)){
+            if (!cart.contains(jsonParam)) {
                 p0.btnAdd.text = remove
                 p0.btnAdd.setBackgroundColor(Color.parseColor("#ffca28"))
                 ttCost += menuObject.itemPrice
                 cart.add(jsonParam)
-            } else{
+            } else {
                 p0.btnAdd.text = add
                 p0.btnAdd.setBackgroundColor(Color.parseColor("#ff5039"))
                 ttCost -= menuObject.itemPrice
                 cart.remove(jsonParam)
             }
 
-            if(cart.isNotEmpty()){
+            if (cart.isNotEmpty()) {
                 btnProceedToCart.visibility = View.VISIBLE
             } else {
                 btnProceedToCart.visibility = View.GONE
             }
-
-            jsonCart.put("user_Id", user_id)
-            jsonCart.put("restaurant_id", menuObject.restaurant_id)
-            jsonCart.put("total_cost", ttCost)
-            jsonCart.put("food", cart)
         }
 
         btnProceedToCart.setOnClickListener {
             val intent = Intent(context, CartActivity::class.java)
-
-            intent.putExtra("resName", resName)
-
+            val order = Cart(user_id, menuObject.restaurant_id, resName, ttCost, cart)
+            intent.putExtra("order", order)
             context.startActivity(intent)
         }
     }

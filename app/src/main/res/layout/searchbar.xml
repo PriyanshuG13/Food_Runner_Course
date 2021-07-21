@@ -9,8 +9,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat"
         android:layout_margin="10dp"
+        android:theme="@style/ThemeOverlay.AppCompat"
         app:cardCornerRadius="20dp">
 
         <EditText
@@ -18,14 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
-            android:textSize="18sp"
-            android:padding="10dp"
-            android:drawablePadding="10dp"
-            android:textColorHint="#6A6A6A"
-            android:textColor="@color/black"
-            android:drawableTint="#272727"
             android:drawableLeft="@drawable/ic_action_search"
-            android:hint="@string/search_restaurants" />
+            android:drawablePadding="10dp"
+            android:drawableTint="#272727"
+            android:hint="@string/search_restaurants"
+            android:padding="10dp"
+            android:textColor="@color/black"
+            android:textColorHint="#6A6A6A"
+            android:textSize="18sp" />
 
     </androidx.cardview.widget.CardView>
 

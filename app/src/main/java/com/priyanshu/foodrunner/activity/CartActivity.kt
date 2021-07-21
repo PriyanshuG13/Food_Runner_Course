@@ -21,9 +21,9 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.priyanshu.foodrunner.R
+import com.priyanshu.foodrunner.model.Cart
 import com.priyanshu.foodrunner.util.ConnectionManager
 import com.priyanshu.foodrunner.util.PLACE_ORDER
-import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -51,24 +51,31 @@ class CartActivity : AppCompatActivity() {
         rlLoading = findViewById(R.id.rlLoading)
         toolbar = findViewById(R.id.toolbar)
 
-        txtListHeaderValue.text = intent.getStringExtra("resName")
-
         setSupportActionBar(toolbar)
         supportActionBar?.title = "My Cart"
 
-        val jsonParam: JSONObject
+        val order: Cart? = intent.getParcelableExtra("order")
 
-//        setUpRecycler(jsonParam.getJSONArray("food"))
-//        val btnText = "Place Order(Total: Rs. ${jsonParam.getJSONArray("total_cost")})"
-//        btnPlaceOrder.text = btnText
+        txtListHeaderValue.text = order?.restaurant_name
+
+        println("Cart: ${order?.food}")
+        setUpRecycler(order?.food as ArrayList<JSONObject>)
+        val btnText = "Place Order(Total: Rs. ${order.total_cost})"
+        btnPlaceOrder.text = btnText
+
+        val jsonParam = JSONObject()
+
+        jsonParam.put("user_Id", order.user_Id)
+        jsonParam.put("restaurant_id", order.restaurant_id)
+        jsonParam.put("total_cost", order.total_cost)
+        jsonParam.put("food", order.food)
 
         btnPlaceOrder.setOnClickListener {
-            rlLoading.visibility = View.VISIBLE
-//            setUpVolley(jsonParam)
+            setUpVolley(jsonParam)
         }
     }
 
-    private fun setUpRecycler(list: JSONArray){
+    private fun setUpRecycler(list: ArrayList<JSONObject>) {
         recyclerCart = findViewById(R.id.recyclerCart)
 
         cartItemsAdapter =
@@ -106,7 +113,8 @@ class CartActivity : AppCompatActivity() {
                     }
                 },
                 Response.ErrorListener { error: VolleyError? ->
-                    Toast.makeText(this@CartActivity as Context, error?.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@CartActivity as Context, error?.message, Toast.LENGTH_SHORT)
+                        .show()
                 }) {
 
                 override fun getHeaders(): MutableMap<String, String> {
@@ -132,7 +140,7 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    class CartItemsAdapter(private var ordHisItem: JSONArray, val context: Context) :
+    class CartItemsAdapter(private var ordHisItem: ArrayList<JSONObject>, val context: Context) :
         RecyclerView.Adapter<CartItemsAdapter.CartItemsViewHolder>() {
         override fun onCreateViewHolder(
             p0: ViewGroup,
@@ -148,14 +156,14 @@ class CartActivity : AppCompatActivity() {
             p0: CartItemsViewHolder,
             p1: Int
         ) {
-            val ordHisItemObject = ordHisItem.getJSONObject(p1)
-            p0.itemName.text = ordHisItemObject.getString("name")
-            val cost = "Rs. ${ordHisItemObject.getString("cost")}"
+            val ordHisItemObject = ordHisItem.get(p1)
+            p0.itemName.text = ordHisItemObject.get("food_item_name") as String
+            val cost = "Rs. ${ordHisItemObject.get("food_item_cost")}"
             p0.itemCost.text = cost
         }
 
         override fun getItemCount(): Int {
-            return ordHisItem.length()
+            return ordHisItem.size
         }
 
         class CartItemsViewHolder(view: View) : RecyclerView.ViewHolder(view) {

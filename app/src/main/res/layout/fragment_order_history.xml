@@ -15,27 +15,27 @@
             android:id="@+id/txtListHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/previous_order"
-            android:textSize="16sp"
-            android:paddingVertical="10dp"
             android:paddingHorizontal="10dp"
+            android:paddingVertical="10dp"
+            android:text="@string/previous_order"
             android:textColor="@color/black"
+            android:textSize="16sp"
             android:textStyle="bold" />
 
         <View
             android:id="@+id/vline"
-            android:layout_below="@+id/txtListHeader"
             android:layout_width="match_parent"
             android:layout_height="1dp"
+            android:layout_below="@+id/txtListHeader"
             android:background="#8A8A8A" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerOrderHistory"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
             android:layout_below="@+id/vline"
-            tools:listitem="@layout/order_history_custom_row"/>
+            android:padding="5dp"
+            tools:listitem="@layout/order_history_custom_row" />
 
     </RelativeLayout>
 

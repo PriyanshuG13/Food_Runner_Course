@@ -26,59 +26,59 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <RelativeLayout
+            android:id="@+id/rlFavorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:id="@+id/rlFavorites">
+            android:visibility="visible">
 
             <TextView
                 android:id="@+id/txtListHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/choose_menu"
-                android:textSize="16sp"
-                android:paddingVertical="10dp"
                 android:paddingHorizontal="10dp"
+                android:paddingVertical="10dp"
+                android:text="@string/choose_menu"
                 android:textColor="@color/black"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/btnAddtoFav"
-                android:layout_alignParentEnd="true"
                 android:layout_width="42dp"
                 android:layout_height="42dp"
+                android:layout_alignParentEnd="true"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/ic_action_fav" />
 
             <View
                 android:id="@+id/vline"
-                android:layout_below="@+id/btnAddtoFav"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
+                android:layout_below="@+id/btnAddtoFav"
                 android:layout_marginLeft="4dp"
                 android:layout_marginRight="4dp"
                 android:background="#8A8A8A" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerMenu"
-                android:layout_below="@id/txtListHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/txtListHeader"
                 android:padding="5dp" />
 
             <Button
                 android:id="@+id/btnProceedToCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="4dp"
                 android:layout_alignParentBottom="true"
-                android:textAlignment="center"
-                android:visibility="gone"
-                android:textSize="20sp"
+                android:layout_margin="4dp"
                 android:padding="8dp"
+                android:text="@string/proceed_to_cart"
+                android:textAlignment="center"
                 android:textColor="#ffff"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:text="@string/proceed_to_cart" />
+                android:visibility="gone" />
 
         </RelativeLayout>
 

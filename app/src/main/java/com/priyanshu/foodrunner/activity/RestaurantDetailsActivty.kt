@@ -1,9 +1,7 @@
 package com.priyanshu.foodrunner.activity
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
-import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -11,11 +9,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
-import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
@@ -24,7 +20,6 @@ import com.android.volley.toolbox.Volley
 import com.priyanshu.foodrunner.R
 import com.priyanshu.foodrunner.adapter.AllRestaurantsAdapter
 import com.priyanshu.foodrunner.adapter.RestaurantsMenuAdapter
-import com.priyanshu.foodrunner.database.RestaurantDatabase
 import com.priyanshu.foodrunner.database.RestaurantEntity
 import com.priyanshu.foodrunner.model.Menu
 import com.priyanshu.foodrunner.util.ConnectionManager
@@ -84,7 +79,8 @@ class RestaurantDetailsActivty : AppCompatActivity() {
 
         setUpRecycler()
 
-        val listOfFavourites = AllRestaurantsAdapter.GetAllFavAsyncTask(this@RestaurantDetailsActivty).execute().get()
+        val listOfFavourites =
+            AllRestaurantsAdapter.GetAllFavAsyncTask(this@RestaurantDetailsActivty).execute().get()
 
         if (listOfFavourites.isNotEmpty() && listOfFavourites.contains(resId.toString())) {
             btnAddtoFav.setBackgroundResource(R.drawable.ic_action_fav_checked)
@@ -160,11 +156,12 @@ class RestaurantDetailsActivty : AppCompatActivity() {
                                     menuObject.getString("restaurant_id").toInt()
                                 )
                                 menuList.add(menu)
-                                restaurantsMenuAdapter = RestaurantsMenuAdapter(menuList,
-                                                    this@RestaurantDetailsActivty,
-                                                            userId, title,
-                                                            btnProceedToCart
-                                                        )
+                                restaurantsMenuAdapter = RestaurantsMenuAdapter(
+                                    menuList,
+                                    this@RestaurantDetailsActivty,
+                                    userId, title,
+                                    btnProceedToCart
+                                )
                                 val mLayoutManager =
                                     LinearLayoutManager(this@RestaurantDetailsActivty)
                                 recyclerMenu.layoutManager = mLayoutManager

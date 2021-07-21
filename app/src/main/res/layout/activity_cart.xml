@@ -39,53 +39,53 @@
                     android:id="@+id/txtListHeaderKey"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/order_from"
-                    android:textSize="18sp"
-                    android:paddingVertical="10dp"
                     android:layout_marginStart="10dp"
-                    android:textColor="@color/black" />
+                    android:paddingVertical="10dp"
+                    android:text="@string/order_from"
+                    android:textColor="@color/black"
+                    android:textSize="18sp" />
 
                 <TextView
                     android:id="@+id/txtListHeaderValue"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Baco Tell"
-                    android:layout_toEndOf="@id/txtListHeaderKey"
-                    android:textSize="18sp"
-                    android:paddingVertical="10dp"
-                    android:paddingHorizontal="6dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_toEndOf="@id/txtListHeaderKey"
+                    android:paddingHorizontal="6dp"
+                    android:paddingVertical="10dp"
+                    android:text="Baco Tell"
                     android:textColor="@color/black"
+                    android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <View
                     android:id="@+id/vline"
-                    android:layout_below="@+id/txtListHeaderKey"
                     android:layout_width="match_parent"
                     android:layout_height="2dp"
+                    android:layout_below="@+id/txtListHeaderKey"
                     android:layout_marginVertical="5dp"
                     android:background="@color/colorPrimaryDark" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerCart"
-                    android:layout_below="@id/vline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/order_item_custom_row"
-                    android:padding="5dp" />
+                    android:layout_below="@id/vline"
+                    android:padding="5dp"
+                    tools:listitem="@layout/order_item_custom_row" />
 
                 <Button
                     android:id="@+id/btnPlaceOrder"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
                     android:layout_alignParentBottom="true"
-                    android:textAlignment="center"
-                    android:textSize="20sp"
+                    android:layout_margin="4dp"
                     android:padding="8dp"
+                    android:text="@string/place_order"
+                    android:textAlignment="center"
                     android:textColor="#ffff"
-                    android:textStyle="bold"
-                    android:text="@string/place_order" />
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
 
             </RelativeLayout>
 
@@ -106,35 +106,35 @@
             android:id="@+id/imgOrdered"
             android:layout_width="250dp"
             android:layout_height="250dp"
-            android:layout_marginTop="150dp"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/check"/>
+            android:layout_marginTop="150dp"
+            android:src="@drawable/check" />
 
         <TextView
             android:id="@+id/txtBelowLogo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imgOrdered"
+            android:paddingVertical="10dp"
             android:text="@string/order_successful"
             android:textAlignment="center"
+            android:textColor="@color/black"
             android:textSize="18sp"
-            android:paddingVertical="10dp"
-            android:textStyle="bold"
-            android:textColor="@color/black" />
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/btnOk"
             android:layout_width="130dp"
             android:layout_height="60dp"
-            android:textAlignment="center"
-            android:textSize="16sp"
-            android:padding="10dp"
-            android:layout_margin="15dp"
-            android:textColor="@color/black"
-            android:textStyle="bold"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:text="@string/ok" />
+            android:layout_margin="15dp"
+            android:padding="10dp"
+            android:text="@string/ok"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
 
     </RelativeLayout>
 

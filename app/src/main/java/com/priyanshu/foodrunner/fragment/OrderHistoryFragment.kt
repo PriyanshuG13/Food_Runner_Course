@@ -9,7 +9,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
@@ -28,7 +27,6 @@ import com.priyanshu.foodrunner.util.ConnectionManager
 import com.priyanshu.foodrunner.util.FETCH_PREVIOUS_ORDERS
 import org.json.JSONException
 import org.json.JSONObject
-import kotlin.collections.HashMap
 
 class OrderHistoryFragment : Fragment() {
 
@@ -48,7 +46,10 @@ class OrderHistoryFragment : Fragment() {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_order_history, container, false)
         sharedPreferences =
-            requireActivity().getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE)
+            requireActivity().getSharedPreferences(
+                getString(R.string.preference_file_name),
+                Context.MODE_PRIVATE
+            )
 
         rlOrdHis = view.findViewById(R.id.rlOrderHistory)
         rlNoOrdHis = view.findViewById(R.id.rlNoOrderHistory)

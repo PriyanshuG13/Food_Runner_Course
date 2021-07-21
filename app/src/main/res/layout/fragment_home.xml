@@ -7,10 +7,10 @@
 
 
     <RelativeLayout
+        android:id="@+id/rlFavorites"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="visible"
-        android:id="@+id/rlFavorites">
+        android:visibility="visible">
 
         <include layout="@layout/searchbar" />
 
@@ -18,8 +18,8 @@
             android:id="@+id/recyclerRestaurants"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="5dp"
-            android:layout_below="@+id/llSearchBar" />
+            android:layout_below="@+id/llSearchBar"
+            android:padding="5dp" />
 
     </RelativeLayout>
 
