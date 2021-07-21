@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinatorCart"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_scrollFlags="scroll|enterAlways">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark"
+            app:elevation="0dip">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <RelativeLayout
+                android:id="@+id/rlFavorites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/txtListHeaderKey"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/order_from"
+                    android:textSize="18sp"
+                    android:paddingVertical="10dp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:id="@+id/txtListHeaderValue"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Baco Tell"
+                    android:layout_toEndOf="@id/txtListHeaderKey"
+                    android:textSize="18sp"
+                    android:paddingVertical="10dp"
+                    android:paddingHorizontal="6dp"
+                    android:layout_marginEnd="10dp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/vline"
+                    android:layout_below="@+id/txtListHeaderKey"
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:layout_marginVertical="5dp"
+                    android:background="@color/colorPrimaryDark" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerCart"
+                    android:layout_below="@id/vline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:listitem="@layout/order_item_custom_row"
+                    android:padding="5dp" />
+
+                <Button
+                    android:id="@+id/btnPlaceOrder"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:layout_alignParentBottom="true"
+                    android:textAlignment="center"
+                    android:textSize="20sp"
+                    android:padding="8dp"
+                    android:textColor="#ffff"
+                    android:textStyle="bold"
+                    android:text="@string/place_order" />
+
+            </RelativeLayout>
+
+            <include layout="@layout/progressbar" />
+
+        </FrameLayout>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <RelativeLayout
+        android:id="@+id/rlOrderSuccessful"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimaryLight"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/imgOrdered"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="150dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/check"/>
+
+        <TextView
+            android:id="@+id/txtBelowLogo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/imgOrdered"
+            android:text="@string/order_successful"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:paddingVertical="10dp"
+            android:textStyle="bold"
+            android:textColor="@color/black" />
+
+        <Button
+            android:id="@+id/btnOk"
+            android:layout_width="130dp"
+            android:layout_height="60dp"
+            android:textAlignment="center"
+            android:textSize="16sp"
+            android:padding="10dp"
+            android:layout_margin="15dp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:text="@string/ok" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
