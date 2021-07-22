@@ -26,53 +26,61 @@
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/rlFavorites"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="visible">
+            android:orientation="vertical"
+            android:visibility="visible"
+            android:weightSum="10">
 
-            <TextView
-                android:id="@+id/txtListHeader"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="10dp"
-                android:text="@string/choose_menu"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                android:layout_height="0dp"
+                android:layout_weight="0.8">
 
-            <ImageButton
-                android:id="@+id/btnAddtoFav"
-                android:layout_width="42dp"
-                android:layout_height="42dp"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="10dp"
-                android:background="@drawable/ic_action_fav" />
+                <TextView
+                    android:id="@+id/txtListHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="10dp"
+                    android:text="@string/choose_menu"
+                    android:textColor="@color/black"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
-            <View
-                android:id="@+id/vline"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_below="@+id/btnAddtoFav"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:background="#8A8A8A" />
+                <ImageButton
+                    android:id="@+id/btnAddtoFav"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/ic_action_fav" />
+
+                <View
+                    android:id="@+id/vline"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_below="@id/txtListHeader"
+                    android:layout_marginLeft="4dp"
+                    android:layout_marginRight="4dp"
+                    android:background="#8A8A8A" />
+
+            </RelativeLayout>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerMenu"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txtListHeader"
-                tools:listitem="@layout/restaurant_detail_custom_row"
-                android:padding="5dp" />
+                android:layout_height="0dp"
+                android:layout_weight="9.2"
+                android:padding="5dp"
+                tools:listitem="@layout/restaurant_detail_custom_row" />
 
             <Button
                 android:id="@+id/btnProceedToCart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
                 android:layout_margin="4dp"
                 android:padding="8dp"
                 android:text="@string/proceed_to_cart"
@@ -82,7 +90,7 @@
                 android:textStyle="bold"
                 android:visibility="gone" />
 
-        </RelativeLayout>
+        </LinearLayout>
 
         <include layout="@layout/progressbar" />
 

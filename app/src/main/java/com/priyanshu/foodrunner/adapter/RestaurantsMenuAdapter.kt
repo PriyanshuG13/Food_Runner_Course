@@ -47,7 +47,8 @@ class RestaurantsMenuAdapter(
         val jsonParam = JSONObject()
         jsonParam.put("food_item_id", menuObject.id)
 
-        val fooditem: ArrayList<String> = arrayListOf(menuObject.id.toString(),menuObject.name,cost)
+        val fooditem: ArrayList<String> =
+            arrayListOf(menuObject.id.toString(), menuObject.name, cost)
 
         if (cart.isNotEmpty() && cart.contains(jsonParam)) {
             p0.btnAdd.text = remove

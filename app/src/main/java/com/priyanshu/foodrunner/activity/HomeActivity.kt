@@ -82,7 +82,8 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun init() {
-        sharedPreferences = getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE)
+        sharedPreferences =
+            getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE)
         toolbar = findViewById(R.id.toolbar)
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)

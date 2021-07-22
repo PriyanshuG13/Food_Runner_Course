@@ -41,13 +41,13 @@ class HomeFragment : Fragment() {
     private lateinit var rlLoading: RelativeLayout
     private lateinit var etSearch: EditText
 
-    var ratingComparator = Comparator<Restaurants>{res1, res2 ->
+    var ratingComparator = Comparator<Restaurants> { res1, res2 ->
         res1.rating.compareTo(res2.rating, true)
     }
-    var nameComparator = Comparator<Restaurants>{res1, res2 ->
+    var nameComparator = Comparator<Restaurants> { res1, res2 ->
         res1.name.compareTo(res2.name, true)
     }
-    var costComparator = Comparator<Restaurants>{res1, res2 ->
+    var costComparator = Comparator<Restaurants> { res1, res2 ->
         res1.costForTwo.toString().compareTo(res2.costForTwo.toString(), true)
     }
 
@@ -69,6 +69,7 @@ class HomeFragment : Fragment() {
         etSearch.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
             }
+
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
@@ -159,7 +160,7 @@ class HomeFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId){
+        when (item.itemId) {
             R.id.sort_name -> {
                 Collections.sort(restaurantList, nameComparator)
                 allRestaurantsAdapter.notifyDataSetChanged()

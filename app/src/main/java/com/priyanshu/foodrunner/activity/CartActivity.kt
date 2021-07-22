@@ -70,7 +70,7 @@ class CartActivity : AppCompatActivity() {
         val foodList = JSONArray()
         val food = JSONArray()
 
-        for (foodItem in order.foodList){
+        for (foodItem in order.foodList) {
             val foodId = JSONObject()
             foodId.put("food_item_id", foodItem[0])
             food.put(foodId)
@@ -132,10 +132,12 @@ class CartActivity : AppCompatActivity() {
                                 startActivity(intent)
                             }
                         } else {
-                            Toast.makeText(this@CartActivity as Context,
-                                        "Order was not Successfully Placed. Please Try Again",
-                                            Toast.LENGTH_LONG)
-                                            .show()
+                            Toast.makeText(
+                                this@CartActivity as Context,
+                                "Order was not Successfully Placed. Please Try Again",
+                                Toast.LENGTH_LONG
+                            )
+                                .show()
                             startActivity(intent)
                         }
                     } catch (e: JSONException) {
