@@ -76,6 +76,12 @@ class RestaurantDetailsActivty : AppCompatActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar?.title = title
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+            finish()
+        }
 
         setUpRecycler()
 

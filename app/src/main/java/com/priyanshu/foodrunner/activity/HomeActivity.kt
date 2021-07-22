@@ -82,16 +82,22 @@ class HomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun init() {
-        sharedPreferences =
-            getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE)
+        sharedPreferences = getSharedPreferences(getString(R.string.preference_file_name), Context.MODE_PRIVATE)
         toolbar = findViewById(R.id.toolbar)
         drawerLayout = findViewById(R.id.drawer_layout)
         navigationView = findViewById(R.id.navigation_view)
-//        txtUserName = findViewById(R.id.txtDrawerText)
-//        txtPhone = findViewById(R.id.txtDrawerSecondaryText)
-//
-//        txtUserName.text = sharedPreferences.getString("name", "Priyanshu")
-//        txtPhone.text = sharedPreferences.getString("email", "0123456789")
+
+        val headerView = navigationView.getHeaderView(0);
+
+        txtUserName = headerView.findViewById(R.id.txtDrawerText)
+        txtPhone = headerView.findViewById(R.id.txtDrawerSecondaryText)
+
+
+        val userName = sharedPreferences.getString("name", "Priyanshu").toString()
+        val mobileNumber = "+91-${sharedPreferences.getString("mobile_number", "0123456789")}"
+
+        txtUserName.text = userName
+        txtPhone.text = mobileNumber
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

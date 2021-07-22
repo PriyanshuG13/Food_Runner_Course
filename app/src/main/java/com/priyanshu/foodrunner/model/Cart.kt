@@ -12,5 +12,5 @@ data class Cart(
     val restaurant_id: Int,
     val restaurant_name: String,
     val total_cost: Int,
-    val food: @RawValue ArrayList<JSONObject>
+    val foodList: ArrayList<ArrayList<String>>
 ) : Parcelable

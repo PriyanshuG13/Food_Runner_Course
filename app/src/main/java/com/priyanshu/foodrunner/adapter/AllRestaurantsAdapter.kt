@@ -8,6 +8,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
@@ -19,10 +21,17 @@ import com.priyanshu.foodrunner.database.RestaurantDatabase
 import com.priyanshu.foodrunner.database.RestaurantEntity
 import com.priyanshu.foodrunner.model.Restaurants
 import com.squareup.picasso.Picasso
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AllRestaurantsAdapter(private var restaurants: ArrayList<Restaurants>, val context: Context) :
-    RecyclerView.Adapter<AllRestaurantsAdapter.AllRestaurantsViewHolder>() {
+    RecyclerView.Adapter<AllRestaurantsAdapter.AllRestaurantsViewHolder>(), Filterable {
 
+    var restaurantsFilterList: ArrayList<Restaurants> = arrayListOf()
+
+    init {
+        restaurantsFilterList = restaurants
+    }
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): AllRestaurantsViewHolder {
         val itemView = LayoutInflater.from(p0.context)
@@ -32,25 +41,50 @@ class AllRestaurantsAdapter(private var restaurants: ArrayList<Restaurants>, val
     }
 
     override fun getItemCount(): Int {
-        return restaurants.size
+        return restaurantsFilterList.size
     }
 
     override fun getItemViewType(position: Int): Int {
         return position
     }
 
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                if (charSearch.isEmpty()) {
+                    restaurantsFilterList = restaurants
+                } else {
+                    val resultList = ArrayList<Restaurants>()
+                    for (row in restaurants) {
+                        if (row.name.lowercase(Locale.ROOT).contains(charSearch.lowercase(Locale.ROOT))) {
+                            resultList.add(row)
+                        }
+                    }
+                    restaurantsFilterList = resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = restaurantsFilterList
+                return filterResults
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                restaurantsFilterList = results?.values as ArrayList<Restaurants>
+                notifyDataSetChanged()
+            }
+
+        }
+    }
 
     override fun onBindViewHolder(p0: AllRestaurantsViewHolder, p1: Int) {
-        val resObject = restaurants.get(p1)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            p0.resThumbnail.clipToOutline = true
-        }
+        val resObject = restaurantsFilterList.get(p1)
+
         p0.restaurantName.text = resObject.name
         p0.rating.text = resObject.rating
-        val costForTwo = "${resObject.costForTwo.toString()}/person"
+        val costForTwo = "${resObject.costForTwo}/person"
         p0.cost.text = costForTwo
         Picasso.get().load(resObject.imageUrl).error(R.drawable.res_image).into(p0.resThumbnail)
-
 
         val listOfFavourites = GetAllFavAsyncTask(context).execute().get()
 

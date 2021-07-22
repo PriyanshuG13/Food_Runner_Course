@@ -2,6 +2,7 @@ package com.priyanshu.foodrunner.activity
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -24,6 +25,7 @@ import com.priyanshu.foodrunner.R
 import com.priyanshu.foodrunner.model.Cart
 import com.priyanshu.foodrunner.util.ConnectionManager
 import com.priyanshu.foodrunner.util.PLACE_ORDER
+import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
@@ -36,7 +38,7 @@ class CartActivity : AppCompatActivity() {
     private lateinit var progressBar: ProgressBar
     private lateinit var rlLoading: RelativeLayout
     private lateinit var recyclerCart: RecyclerView
-    private lateinit var cartItemsAdapter: CartItemsAdapter
+    private lateinit var btnOk: Button
     private lateinit var txtListHeaderValue: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,16 +52,35 @@ class CartActivity : AppCompatActivity() {
         progressBar = findViewById(R.id.progressBar)
         rlLoading = findViewById(R.id.rlLoading)
         toolbar = findViewById(R.id.toolbar)
+        btnOk = findViewById(R.id.btnOk)
 
         setSupportActionBar(toolbar)
         supportActionBar?.title = "My Cart"
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val order: Cart? = intent.getParcelableExtra("order")
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+            finish()
+        }
 
-        txtListHeaderValue.text = order?.restaurant_name
+        val order: Cart = intent.getParcelableExtra("order")!!
 
-        println("Cart: ${order?.food}")
-        setUpRecycler(order?.food as ArrayList<JSONObject>)
+        txtListHeaderValue.text = order.restaurant_name
+
+        val foodList = JSONArray()
+        val food = JSONArray()
+
+        for (foodItem in order.foodList){
+            val foodId = JSONObject()
+            foodId.put("food_item_id", foodItem[0])
+            food.put(foodId)
+            val item = JSONObject()
+            item.put("itemName", foodItem[1])
+            item.put("itemCost", foodItem[2])
+            foodList.put(item)
+        }
+
+        setUpRecycler(foodList)
         val btnText = "Place Order(Total: Rs. ${order.total_cost})"
         btnPlaceOrder.text = btnText
 
@@ -68,25 +89,23 @@ class CartActivity : AppCompatActivity() {
         jsonParam.put("user_Id", order.user_Id)
         jsonParam.put("restaurant_id", order.restaurant_id)
         jsonParam.put("total_cost", order.total_cost)
-        jsonParam.put("food", order.food)
+        jsonParam.put("food", food)
+
+        println("Cart: ${jsonParam}")
 
         btnPlaceOrder.setOnClickListener {
+            rlLoading.visibility = View.VISIBLE
             setUpVolley(jsonParam)
         }
     }
 
-    private fun setUpRecycler(list: ArrayList<JSONObject>) {
+    private fun setUpRecycler(list: JSONArray) {
         recyclerCart = findViewById(R.id.recyclerCart)
 
-        cartItemsAdapter =
-            CartItemsAdapter(list, this@CartActivity)
-        val mLayoutManager =
-            LinearLayoutManager(this@CartActivity)
-        recyclerCart.layoutManager = mLayoutManager
+        recyclerCart.layoutManager = LinearLayoutManager(this@CartActivity)
         recyclerCart.itemAnimator = DefaultItemAnimator()
-        recyclerCart.adapter = cartItemsAdapter
+        recyclerCart.adapter = CartItemsAdapter(list, this@CartActivity)
         recyclerCart.setHasFixedSize(true)
-
     }
 
     private fun setUpVolley(jsonParam: JSONObject) {
@@ -98,8 +117,9 @@ class CartActivity : AppCompatActivity() {
                 Request.Method.POST,
                 PLACE_ORDER,
                 jsonParam,
-                Response.Listener<JSONObject> { response ->
+                Response.Listener { response ->
                     rlLoading.visibility = View.GONE
+                    val intent = Intent(this@CartActivity, HomeActivity::class.java)
 
                     try {
                         val data = response.getJSONObject("data")
@@ -107,6 +127,16 @@ class CartActivity : AppCompatActivity() {
                         if (success) {
                             coordinatorCart.visibility = View.GONE
                             rlOrderSuccessful.visibility = View.VISIBLE
+
+                            btnOk.setOnClickListener {
+                                startActivity(intent)
+                            }
+                        } else {
+                            Toast.makeText(this@CartActivity as Context,
+                                        "Order was not Successfully Placed. Please Try Again",
+                                            Toast.LENGTH_LONG)
+                                            .show()
+                            startActivity(intent)
                         }
                     } catch (e: JSONException) {
                         e.printStackTrace()
@@ -140,7 +170,7 @@ class CartActivity : AppCompatActivity() {
         }
     }
 
-    class CartItemsAdapter(private var ordHisItem: ArrayList<JSONObject>, val context: Context) :
+    class CartItemsAdapter(private var Items: JSONArray, val context: Context) :
         RecyclerView.Adapter<CartItemsAdapter.CartItemsViewHolder>() {
         override fun onCreateViewHolder(
             p0: ViewGroup,
@@ -156,14 +186,13 @@ class CartActivity : AppCompatActivity() {
             p0: CartItemsViewHolder,
             p1: Int
         ) {
-            val ordHisItemObject = ordHisItem.get(p1)
-            p0.itemName.text = ordHisItemObject.get("food_item_name") as String
-            val cost = "Rs. ${ordHisItemObject.get("food_item_cost")}"
-            p0.itemCost.text = cost
+            val ItemObject = Items.getJSONObject(p1)
+            p0.itemName.text = ItemObject.getString("itemName")
+            p0.itemCost.text = ItemObject.getString("itemCost")
         }
 
         override fun getItemCount(): Int {
-            return ordHisItem.size
+            return Items.length()
         }
 
         class CartItemsViewHolder(view: View) : RecyclerView.ViewHolder(view) {

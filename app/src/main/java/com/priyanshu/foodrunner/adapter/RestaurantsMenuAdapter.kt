@@ -25,7 +25,7 @@ class RestaurantsMenuAdapter(
 
     val cart = arrayListOf<JSONObject>()
     var ttCost: Int = 0
-    val jsonCart = JSONObject()
+    val foodList: ArrayList<ArrayList<String>> = arrayListOf()
 
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): RestaurantsMenuViewHolder {
         val itemView = LayoutInflater.from(p0.context)
@@ -46,8 +46,8 @@ class RestaurantsMenuAdapter(
 
         val jsonParam = JSONObject()
         jsonParam.put("food_item_id", menuObject.id)
-        jsonParam.put("food_item_name", menuObject.name)
-        jsonParam.put("food_item_cost", menuObject.itemPrice)
+
+        val fooditem: ArrayList<String> = arrayListOf(menuObject.id.toString(),menuObject.name,cost)
 
         if (cart.isNotEmpty() && cart.contains(jsonParam)) {
             p0.btnAdd.text = remove
@@ -63,11 +63,13 @@ class RestaurantsMenuAdapter(
                 p0.btnAdd.setBackgroundColor(Color.parseColor("#ffca28"))
                 ttCost += menuObject.itemPrice
                 cart.add(jsonParam)
+                foodList.add(fooditem)
             } else {
                 p0.btnAdd.text = add
                 p0.btnAdd.setBackgroundColor(Color.parseColor("#ff5039"))
                 ttCost -= menuObject.itemPrice
                 cart.remove(jsonParam)
+                foodList.remove(fooditem)
             }
 
             if (cart.isNotEmpty()) {
@@ -79,7 +81,7 @@ class RestaurantsMenuAdapter(
 
         btnProceedToCart.setOnClickListener {
             val intent = Intent(context, CartActivity::class.java)
-            val order = Cart(user_id, menuObject.restaurant_id, resName, ttCost, cart)
+            val order = Cart(user_id, menuObject.restaurant_id, resName, ttCost, foodList)
             intent.putExtra("order", order)
             context.startActivity(intent)
         }

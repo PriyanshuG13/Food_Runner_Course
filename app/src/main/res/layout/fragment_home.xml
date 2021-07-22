@@ -19,9 +19,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/llSearchBar"
-            android:padding="5dp" />
+            android:padding="5dp"
+            tools:listitem="@layout/restaurants_custom_row"/>
 
     </RelativeLayout>
 
     <include layout="@layout/progressbar" />
+
 </FrameLayout>

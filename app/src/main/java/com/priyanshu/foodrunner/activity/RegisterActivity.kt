@@ -49,6 +49,11 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.setHomeButtonEnabled(true)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+            finish()
+        }
+
         rlRegister = findViewById(R.id.rlRegister)
         etName = findViewById(R.id.etName)
         etPhoneNumber = findViewById(R.id.etPhoneNumber)

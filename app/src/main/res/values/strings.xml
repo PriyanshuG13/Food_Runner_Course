@@ -79,6 +79,11 @@
     <string name="order_from">Ordering From: </string>
     <string name="ok">Ok</string>
     <string name="order_successful">Your order has been successfully placed!</string>
+    <string name="sort_costLtoH">by Cost(Low to High)</string>
+    <string name="sort_costHtoL">by Cost(High to Low)</string>
+    <string name="sort_rating">by Rating</string>
+    <string name="sort_name">by Name</string>
+    <string name="sort">Sort</string>
     <array name="filters">
         <item>Cost(Low to High)</item>
         <item>Cost(High to Low)</item>
